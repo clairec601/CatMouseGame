@@ -5,6 +5,7 @@ using UnityEngine;
 public class catScript : MonoBehaviour
 {
     // Start is called before the first frame update
+    //yay
 
     void OnCollisionEnter2D(Collision2D col){
          if(col.gameObject.name =="yarn ball"){
