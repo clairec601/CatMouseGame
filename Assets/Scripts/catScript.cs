@@ -6,9 +6,11 @@ public class catScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    // void OnCollisionEnter(Collision col){
-    //     if(col.gameObject.)
-    // }
+    void OnCollisionEnter2D(Collision2D col){
+         if(col.gameObject.name =="yarn ball"){
+            ScoreScript.scoreValue += 100;
+         }
+    }
 
     void Start()
     {
