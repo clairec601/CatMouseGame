@@ -27,6 +27,10 @@ public class MouseMove : MonoBehaviour
             onLadder = true;
             Debug.Log("on ladder");
         }
+
+        if(col.gameObject.tag == "YarnBall"){
+            ScoreScript.scoreValue += 100;
+        }
       
     }
     void OnCollisionExit2D(Collision2D col){
