@@ -27,7 +27,13 @@ public class MouseMove : MonoBehaviour
             onLadder = true;
             Debug.Log("on ladder");
         }
-      
+
+        if (col.gameObject.tag == ("YarnBall")){
+            ScoreScript.scoreValue -=100;
+    
+        }
+
+
     }
     void OnCollisionExit2D(Collision2D col){
           if (col.gameObject.tag == ("Ground")){
@@ -39,6 +45,10 @@ public class MouseMove : MonoBehaviour
             onLadder = false;
             Debug.Log("off ladder");
           }
+
+        if(col.gameObject.tag =="YarnBall"){
+            ScoreScript.scoreValue += 100;
+        }  
     }
     // Start is called before the first frame update
     void Start()
