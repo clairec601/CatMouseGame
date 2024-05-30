@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class MouseMove : MonoBehaviour
 {
-  //test
+
     public GameObject player;
     Rigidbody2D rb;
     Animator anim;
@@ -15,6 +18,9 @@ public class MouseMove : MonoBehaviour
     public float jumpTime;
     public float airTime;
     private bool isJumping;
+
+    static public int totalLives = 3;
+    public int lives;   
 
      void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.tag == ("Ground"))
@@ -28,8 +34,19 @@ public class MouseMove : MonoBehaviour
             Debug.Log("on ladder");
         }
 
-        if(col.gameObject.tag == "YarnBall"){
+        if(col.gameObject.tag == "YarnBall"){ //replace with invisible object
             ScoreScript.scoreValue += 100;
+            Debug.Log("score: " + ScoreScript.scoreValue);
+        }
+
+        if (col.gameObject.tag == "YarnBall"){
+            lives = totalLives--;
+            if (lives == 0){
+                Debug.Log("Game over");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+
+            }
+            Debug.Log("Lives minus one");
         }
       
     }
@@ -49,12 +66,15 @@ public class MouseMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        Scene currentScene = SceneManager.GetActiveScene(); //active scene
+        lives = totalLives;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 position = transform.position;
+      Vector3 position = transform.position;
 
       if (Input.GetKey(KeyCode.RightArrow)){
       rb.AddForce(transform.right * (-moveForce), ForceMode2D.Force); 
