@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MouseMove : MonoBehaviour
 {
@@ -17,6 +16,9 @@ public class MouseMove : MonoBehaviour
     public float airTime;
     private bool isJumping;
 
+    static public int totalLives = 3;
+    public int lives;   
+
      void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.tag == ("Ground"))
         {
@@ -27,6 +29,10 @@ public class MouseMove : MonoBehaviour
         if (col.gameObject.tag == ("Ladder")){
             onLadder = true;
             Debug.Log("on ladder");
+        }
+
+        if(col.gameObject.tag == "YarnBall"){
+            ScoreScript.scoreValue += 100;
         }
       
     }
@@ -50,12 +56,15 @@ public class MouseMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        Scene currentScene = SceneManager.GetActiveScene(); //active scene
+        lives = totalLives;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 position = transform.position;
+      Vector3 position = transform.position;
 
       if (Input.GetKey(KeyCode.RightArrow)){
       rb.AddForce(transform.right * (-moveForce), ForceMode2D.Force); 

@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class yarnMove : MonoBehaviour
+public class LifeSystem : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject YarnBall;
-    Rigidbody2D rb;
-
     void Start()
     {
         
