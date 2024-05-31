@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseMove : MonoBehaviour
-{
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class MouseMove : MonoBehaviour {
 
     public GameObject player;
     Rigidbody2D rb;
@@ -31,8 +33,14 @@ public class MouseMove : MonoBehaviour
             Debug.Log("on ladder");
         }
 
-        if(col.gameObject.tag == "YarnBall"){
+        if(col.gameObject.tag == "YarnBall"){ //replace with invisible object
             ScoreScript.scoreValue += 100;
+            Debug.Log("score: " + ScoreScript.scoreValue);
+        }
+
+        if (col.gameObject.tag == "YarnBall"){
+            lives--;
+            Debug.Log("Lives minus one");
         }
       
     }
@@ -46,10 +54,6 @@ public class MouseMove : MonoBehaviour
             onLadder = false;
             Debug.Log("off ladder");
           }
-
-        if(col.gameObject.tag =="YarnBall"){
-            ScoreScript.scoreValue += 100;
-        }  
     }
     // Start is called before the first frame update
     void Start()
@@ -157,7 +161,10 @@ public class MouseMove : MonoBehaviour
         anim.SetBool("isClimbing", false);
       }
 
-      
+      if (lives == 0){
+            Debug.Log("Game over");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+       }
       
       if (position.x >= 7){
           Debug.Log("out of bounds");
