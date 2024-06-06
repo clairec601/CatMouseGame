@@ -8,6 +8,7 @@ public class yarnMove : MonoBehaviour
     public GameObject YarnBall;
     Rigidbody2D rb;
     private float randomTimer;
+    private float setTime;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -16,11 +17,12 @@ public class yarnMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rigidbody2D newYarnBall;
-        randomTimer = Random.Range(3f, 5f);
-        randomTimer -= randomTimer.deltaTime;
-        if (randomTimer == 0){
+        GameObject newYarnBall;
+        randomTimer = Random.Range(4f, 10f);
+        randomTimer -= Time.deltaTime;
+        if (randomTimer <= 0){
             newYarnBall = Instantiate(YarnBall, transform.position, transform.rotation);
+            randomTimer = setTime;
         }
     }
 }
