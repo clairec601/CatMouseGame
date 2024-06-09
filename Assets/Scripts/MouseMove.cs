@@ -9,10 +9,12 @@ public class MouseMove : MonoBehaviour {
 
     public GameObject player;
     Rigidbody2D rb;
-    Animator anim;
     float moveForce = 2;
     private bool isGrounded;
     private bool onLadder;
+    private bool isFacingLeft;
+    private bool isFacingRight;
+    private Vector2 facingLeft;
     public float jumpTimeCounter;
     public float jumpTime;
     public float airTime;
@@ -59,7 +61,8 @@ public class MouseMove : MonoBehaviour {
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+
+        facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
 
         Scene currentScene = SceneManager.GetActiveScene(); //active scene
         lives = totalLives;
@@ -71,36 +74,23 @@ public class MouseMove : MonoBehaviour {
       Vector3 position = transform.position;
 
       if (Input.GetKey(KeyCode.RightArrow)){
-      rb.AddForce(transform.right * (-moveForce), ForceMode2D.Force); 
-      anim.SetBool("isMovingRight", true);
-      anim.SetBool("isMoving", false);
-      anim.SetBool("isIdleRight", false);
+        isFacingRight = true;
+        isFacingLeft = false;
+        rb.AddForce(transform.right * (-moveForce), ForceMode2D.Force);    
       }
-      else{
-        anim.SetBool("isMovingRight", false);
-      }
-      
-      if (Input.GetKey(KeyCode.LeftArrow)) {
-      rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Force); 
-      anim.SetBool("isMoving", true);
-      anim.SetBool("isMovingRight", false);
-      anim.SetBool("isIdle", false);
-      }
-      else {
-        anim.SetBool("isMoving", false);
+      else if (Input.GetKey(KeyCode.LeftArrow)) {
+        isFacingRight = false;
+        isFacingLeft = true;
+        rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Force); 
       }
 
-      if (anim.GetBool("isIdleRight")){
-        Debug.Log("right");
-      }
-      else {
-        Debug.Log("no right");
+      if (isFacingLeft){
+        transform.localScale = facingLeft;
       }
 
-      if (anim.GetBool("isIdleRight") || anim.GetBool("isMovingRight")){
+      if (isFacingRight){
           if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
           isJumping = true;
-          anim.SetBool("isJumpingRight", true);
           jumpTimeCounter = jumpTime;
           rb.velocity = Vector2.up * 5;
 
@@ -109,8 +99,6 @@ public class MouseMove : MonoBehaviour {
       if (Input.GetKey(KeyCode.Space) && isJumping == true) {
           if (jumpTimeCounter > 0){
           rb.velocity = Vector2.up * 5;
-          anim.SetBool("isJumpingRight", true);
-          //rb.AddForce(transform.up * moveForce, ForceMode2D.Impulse); 
           jumpTimeCounter -= Time.deltaTime;
           }
           else {
@@ -120,45 +108,20 @@ public class MouseMove : MonoBehaviour {
       
       if (Input.GetKeyUp(KeyCode.Space)){
         isJumping = false;
-        anim.SetBool("isJumpingRight", false);
       }
-      }
-
-
-      if (anim.GetBool("isIdle") || anim.GetBool("isMoving")){
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
-          isJumping = true;
-          anim.SetBool("isJumping", true);
-          jumpTimeCounter = jumpTime;
-          rb.velocity = Vector2.up * 5;
-
-      }
-
-      if (Input.GetKey(KeyCode.Space) && isJumping == true){
-          if (jumpTimeCounter > 0){
-          rb.velocity = Vector2.up * 5;
-          anim.SetBool("isJumping", true);
-          //rb.AddForce(transform.up * moveForce, ForceMode2D.Impulse); 
-          jumpTimeCounter -= Time.deltaTime; 
-          } 
-          else {
-            isJumping = false;
-          }
       }
       
       if (Input.GetKeyUp(KeyCode.Space)){
         isJumping = false;
-        anim.SetBool("isJumping", false);
       }
-      }
+      
 
       if (onLadder && Input.GetKey(KeyCode.UpArrow)){
-            anim.SetBool("isClimbing", true);
-            rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
-        }
+        rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
+      }//wef
       
       else if (!onLadder){
-        anim.SetBool("isClimbing", false);
+        
       }
 
       if (lives == 0){
@@ -179,4 +142,5 @@ public class MouseMove : MonoBehaviour {
       }
     }
 }
+
 
