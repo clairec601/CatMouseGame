@@ -16,6 +16,7 @@ public class yarnMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 position = transform.position;
         // stopSpawning = false;
         // randomTimer -= Time.deltaTime;
         // if (randomTimer <= 0 && !stopSpawning){
@@ -23,7 +24,23 @@ public class yarnMove : MonoBehaviour
         //     stopSpawning = true;
         //     randomTimer += setTime;
         // 
-        rb.AddForce(transform.right * 1f, ForceMode2D.Impulse);
+        rb.AddForce(transform.right * 1.2f, ForceMode2D.Impulse);
+
+        if (position.x >= 440){
+          //Debug.Log("out of bounds");
+          // position.x = 440;
+          // transform.position = position;
+        rb.velocity = Vector3.zero;
+        rb.AddForce(-transform.right * 1.2f, ForceMode2D.Impulse);
+        }
+
+        if (position.x <= -440){
+          //Debug.Log("out of bounds");
+        //   position.x = 440;
+        //   transform.position = position;
+        }
+
+        
     }
 
 

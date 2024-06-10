@@ -22,14 +22,7 @@ public class TimedSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 position = transform.position;
-
-        if (position.x >= 240){
-          //Debug.Log("out of bounds");
-          position.x = 240;
-          transform.position = position;
-      }
-
+       
     
     }
 }
