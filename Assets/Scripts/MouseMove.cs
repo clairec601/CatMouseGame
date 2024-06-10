@@ -14,6 +14,7 @@ public class MouseMove : MonoBehaviour {
     private bool onLadder;
     private bool isFacingLeft;
     private bool isFacingRight;
+    private bool isClimbing;
     private Vector2 facingLeft;
     public float jumpTimeCounter;
     public float jumpTime;
@@ -117,11 +118,14 @@ public class MouseMove : MonoBehaviour {
       
 
       if (onLadder && Input.GetKey(KeyCode.UpArrow)){
-        rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
-      }//wef
-      
+        isClimbing = true;
+      }
       else if (!onLadder){
-        
+        isClimbing = false;
+      }
+
+      if (isClimbing){
+        rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
       }
 
       if (lives == 0){
