@@ -9,7 +9,7 @@ public class MouseMove : MonoBehaviour {
 
     public GameObject player;
     Rigidbody2D rb;
-    float moveForce = 2;
+    float moveForce = 10;
     private bool isGrounded;
     private bool onLadder;
     private bool isFacingLeft;
@@ -63,7 +63,7 @@ public class MouseMove : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
 
-        facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
+        //facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
 
         Scene currentScene = SceneManager.GetActiveScene(); //active scene
         lives = totalLives;
@@ -75,22 +75,22 @@ public class MouseMove : MonoBehaviour {
       Vector3 position = transform.position;
 
       if (Input.GetKey(KeyCode.RightArrow)){
-        isFacingRight = true;
-        isFacingLeft = false;
-        rb.AddForce(transform.right * (-moveForce), ForceMode2D.Force);    
+        // isFacingRight = true;
+        // isFacingLeft = false;
+        rb.AddForce(transform.right * (-moveForce), ForceMode2D.Impulse);    
       }
       else if (Input.GetKey(KeyCode.LeftArrow)) {
-        isFacingRight = false;
-        isFacingLeft = true;
-        rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Force); 
+        // isFacingRight = false;
+        // isFacingLeft = true;
+        rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Impulse); 
       }
 
-      if (isFacingLeft){
-        transform.localScale = facingLeft;
-      }
+    //   if (isFacingLeft){
+    //     transform.localScale = facingLeft;
+    //   }
 
-      if (isFacingRight){
-          if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
+      //if (isFacingRight){
+        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
           isJumping = true;
           jumpTimeCounter = jumpTime;
           rb.velocity = Vector2.up * 5;
@@ -110,7 +110,7 @@ public class MouseMove : MonoBehaviour {
       if (Input.GetKeyUp(KeyCode.Space)){
         isJumping = false;
       }
-      }
+      //}
       
       if (Input.GetKeyUp(KeyCode.Space)){
         isJumping = false;
@@ -128,20 +128,20 @@ public class MouseMove : MonoBehaviour {
         rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
       }
 
-      if (lives == 0){
-            Debug.Log("Game over");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
-       }
+      // if (lives == 0){
+      //       Debug.Log("Game over");
+      //       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+      //  }
       
-      if (position.x >= 7){
+      if (position.x >= 242){
           Debug.Log("out of bounds");
-          position.x = 7;
+          position.x = 242;
           transform.position = position;
       }
 
-      if (position.x <= -7){
+      if (position.x <= -242){
           Debug.Log("out of bounds");
-          position.x = -7;
+          position.x = -242;
           transform.position = position;
       }
     }
