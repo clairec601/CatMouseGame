@@ -9,13 +9,14 @@ public class MouseMove : MonoBehaviour {
 
     public GameObject player;
     Rigidbody2D rb;
-    float moveForce = 10;
+    float moveForce = 200;
     private bool isGrounded;
     private bool onLadder;
     private bool isFacingLeft;
     private bool isFacingRight;
     private bool isClimbing;
     private Vector2 facingLeft;
+    private Vector2 facingRight;
     public float jumpTimeCounter;
     public float jumpTime;
     public float airTime;
@@ -63,7 +64,8 @@ public class MouseMove : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
 
-        //facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
+        facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
+        facingRight = new Vector2(transform.localScale.x, transform.localScale.y);
 
         Scene currentScene = SceneManager.GetActiveScene(); //active scene
         lives = totalLives;
@@ -75,42 +77,40 @@ public class MouseMove : MonoBehaviour {
       Vector3 position = transform.position;
 
       if (Input.GetKey(KeyCode.RightArrow)){
-        // isFacingRight = true;
-        // isFacingLeft = false;
-        rb.AddForce(transform.right * (-moveForce), ForceMode2D.Impulse);    
+        isFacingRight = true;
+        isFacingLeft = false;
+        rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Impulse); 
+        Debug.Log("hi");
       }
       else if (Input.GetKey(KeyCode.LeftArrow)) {
-        // isFacingRight = false;
-        // isFacingLeft = true;
-        rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Impulse); 
+        isFacingRight = false;
+        isFacingLeft = true;
+        rb.AddForce(transform.right * (-moveForce), ForceMode2D.Impulse); 
       }
 
-    //   if (isFacingLeft){
-    //     transform.localScale = facingLeft;
-    //   }
+      if (isFacingLeft){
+        transform.localScale = facingLeft;
+      }
 
-      //if (isFacingRight){
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
+      if (isFacingRight){
+        transform.localScale = facingRight;
+      }
+
+      if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
           isJumping = true;
           jumpTimeCounter = jumpTime;
-          rb.velocity = Vector2.up * 5;
-
+          rb.velocity = Vector2.up * 100;
       }
 
       if (Input.GetKey(KeyCode.Space) && isJumping == true) {
           if (jumpTimeCounter > 0){
-          rb.velocity = Vector2.up * 5;
+          rb.velocity = Vector2.up * 100;
           jumpTimeCounter -= Time.deltaTime;
           }
           else {
             isJumping = false;
           }
       }
-      
-      if (Input.GetKeyUp(KeyCode.Space)){
-        isJumping = false;
-      }
-      //}
       
       if (Input.GetKeyUp(KeyCode.Space)){
         isJumping = false;
@@ -128,22 +128,22 @@ public class MouseMove : MonoBehaviour {
         rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
       }
 
-      // if (lives == 0){
-      //       Debug.Log("Game over");
-      //       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
-      //  }
+      if (lives == 0){
+            Debug.Log("Game over");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+       }
       
-      if (position.x >= 242){
-          Debug.Log("out of bounds");
-          position.x = 242;
-          transform.position = position;
-      }
+    //   if (position.x >= 242){
+    //       Debug.Log("out of bounds");
+    //       position.x = 242;
+    //       transform.position = position;
+    //   }
 
-      if (position.x <= -242){
-          Debug.Log("out of bounds");
-          position.x = -242;
-          transform.position = position;
-      }
+    //   if (position.x <= -242){
+    //       Debug.Log("out of bounds");
+    //       position.x = -242;
+    //       transform.position = position;
+    //   }
     }
 }
 
