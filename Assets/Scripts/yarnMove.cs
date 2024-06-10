@@ -26,7 +26,7 @@ public class yarnMove : MonoBehaviour
         // 
         rb.AddForce(transform.right * 1.2f, ForceMode2D.Impulse);
 
-        if (position.x >= 440){
+        if (position.x >= 405){
           //Debug.Log("out of bounds");
           // position.x = 440;
           // transform.position = position;
@@ -34,10 +34,9 @@ public class yarnMove : MonoBehaviour
         rb.AddForce(-transform.right * 1.2f, ForceMode2D.Impulse);
         }
 
-        if (position.x <= -440){
-          //Debug.Log("out of bounds");
-        //   position.x = 440;
-        //   transform.position = position;
+        if (position.x <= -405){
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.right * 1.2f, ForceMode2D.Impulse);
         }
 
         
