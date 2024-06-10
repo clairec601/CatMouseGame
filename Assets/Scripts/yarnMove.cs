@@ -7,7 +7,7 @@ public class yarnMove : MonoBehaviour
     // Start is called before the first frame update
     public GameObject YarnBall;
     Rigidbody2D rb;
-    private float randomTimer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -16,11 +16,15 @@ public class yarnMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rigidbody2D newYarnBall;
-        randomTimer = Random.Range(3f, 5f);
-        randomTimer -= randomTimer.deltaTime;
-        if (randomTimer == 0){
-            newYarnBall = Instantiate(YarnBall, transform.position, transform.rotation);
-        }
+        // stopSpawning = false;
+        // randomTimer -= Time.deltaTime;
+        // if (randomTimer <= 0 && !stopSpawning){
+        //     Instantiate(YarnBall, transform.position, transform.rotation);
+        //     stopSpawning = true;
+        //     randomTimer += setTime;
+        // 
+        rb.AddForce(transform.right * 1f, ForceMode2D.Impulse);
     }
+
+
 }

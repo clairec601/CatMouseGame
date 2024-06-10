@@ -5,7 +5,7 @@ using UnityEngine;
 public class catMove : MonoBehaviour
 {
     // Start is called before the first frame update
-   
+    public GameObject cat;
     void Start()
     {
         
