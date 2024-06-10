@@ -25,7 +25,7 @@ public class TimedSpawn : MonoBehaviour
         Vector3 position = transform.position;
 
         if (position.x >= 240){
-          Debug.Log("out of bounds");
+          //Debug.Log("out of bounds");
           position.x = 240;
           transform.position = position;
       }

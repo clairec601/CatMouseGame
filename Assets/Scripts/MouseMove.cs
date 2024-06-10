@@ -21,9 +21,7 @@ public class MouseMove : MonoBehaviour {
     public float jumpTime;
     public float airTime;
     private bool isJumping;
-
-    static public int totalLives = 3;
-    public int lives;   
+    public static int lives = 3;   
 
      void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.tag == ("Ground"))
@@ -43,21 +41,27 @@ public class MouseMove : MonoBehaviour {
         }
 
         if (col.gameObject.tag == "YarnBall"){
-            lives--;
-            Debug.Log("Lives minus one");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+            decreaseLives();
+            Debug.Log("Lives = " + lives);
         }
       
     }
     void OnCollisionExit2D(Collision2D col){
-          if (col.gameObject.tag == ("Ground")){
-            isGrounded = false;
-            Debug.Log("off ground");
-          }
+        if (col.gameObject.tag == ("Ground")){
+          isGrounded = false;
+          Debug.Log("off ground");
+        }
 
-          if (col.gameObject.tag == ("Ladder")){
-            onLadder = false;
-            Debug.Log("off ladder");
-          }
+        if (col.gameObject.tag == ("Ladder")){
+          onLadder = false;
+          Debug.Log("off ladder");
+        }
+
+    }
+
+    public static void decreaseLives() {
+      lives--;
     }
     // Start is called before the first frame update
     void Start()
@@ -68,7 +72,6 @@ public class MouseMove : MonoBehaviour {
         facingRight = new Vector2(transform.localScale.x, transform.localScale.y);
 
         Scene currentScene = SceneManager.GetActiveScene(); //active scene
-        lives = totalLives;
     }
 
     // Update is called once per frame
@@ -80,7 +83,6 @@ public class MouseMove : MonoBehaviour {
         isFacingRight = true;
         isFacingLeft = false;
         rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Impulse); 
-        Debug.Log("hi");
       }
       else if (Input.GetKey(KeyCode.LeftArrow)) {
         isFacingRight = false;
@@ -130,7 +132,8 @@ public class MouseMove : MonoBehaviour {
 
       if (lives == 0){
             Debug.Log("Game over");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+            Application.Quit();
        }
       
     //   if (position.x >= 242){
