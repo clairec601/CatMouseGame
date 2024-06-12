@@ -21,7 +21,11 @@ public class MouseMove : MonoBehaviour {
     public float jumpTime;
     public float airTime;
     private bool isJumping;
-    public static int lives = 3;   
+    public static int lives = 3;  
+    private static bool thirdWasDestroyed;
+    private static bool secondWasDestroyed;
+    private static bool firstWasDestroyed;
+
 
      void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.tag == ("Ground"))
@@ -45,6 +49,7 @@ public class MouseMove : MonoBehaviour {
             decreaseLives();
             Debug.Log("Lives = " + lives);
         }
+
       
     }
     void OnCollisionExit2D(Collision2D col){
@@ -62,7 +67,47 @@ public class MouseMove : MonoBehaviour {
 
     public static void decreaseLives() {
       lives--;
+
+      if (lives == 2) {
+          //Destroy(heart3);
+          thirdWasDestroyed = true;
+      }
+
+      if (lives == 1) {
+          // Destroy(heart3);
+          // Destroy(heart2);
+          thirdWasDestroyed = true;
+          secondWasDestroyed = true;
+      }
+
+      if (lives == 0){
+          // Destroy(heart3);
+          // Destroy(heart2);
+          // Destroy(heart1);
+          thirdWasDestroyed = true;
+          secondWasDestroyed = true;
+          firstWasDestroyed = true;
+      }
     }
+
+    void Awake() {
+      var heart3 = GameObject.FindWithTag("ThirdHeart");
+      var heart2 = GameObject.FindWithTag("SecondHeart");
+      var heart1 = GameObject.FindWithTag("FirstHeart");
+
+      if (thirdWasDestroyed){
+        Destroy(heart3);
+      }
+
+      if (secondWasDestroyed){
+        Destroy(heart2);
+      }
+
+      if (firstWasDestroyed){
+        Destroy(heart1);
+      }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

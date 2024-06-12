@@ -7,6 +7,10 @@ TagManager:
   - YarnBall
   - Cat
   - Ground
+  - Heart
+  - ThirdHeart
+  - SecondHeart
+  - FirstHeart
   layers:
   - Default
   - TransparentFX
