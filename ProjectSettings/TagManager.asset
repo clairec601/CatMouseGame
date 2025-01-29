@@ -11,6 +11,9 @@ TagManager:
   - ThirdHeart
   - SecondHeart
   - FirstHeart
+  - Ladder
+  - GirlMouse
+  - Ignore
   layers:
   - Default
   - TransparentFX

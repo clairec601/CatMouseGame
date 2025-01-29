@@ -9,7 +9,7 @@ public class MouseMove : MonoBehaviour {
 
     public GameObject player;
     Rigidbody2D rb;
-    float moveForce = 200;
+    float moveForce = 40;
     private bool isGrounded;
     private bool onLadder;
     private bool isFacingLeft;
@@ -19,13 +19,13 @@ public class MouseMove : MonoBehaviour {
     private Vector2 facingRight;
     public float jumpTimeCounter;
     public float jumpTime;
-    public float airTime;
     private bool isJumping;
     public static int lives = 3;  
     private static bool thirdWasDestroyed;
     private static bool secondWasDestroyed;
     private static bool firstWasDestroyed;
-
+    private float vertical;
+    private float horizontal;
 
      void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.tag == ("Ground"))
@@ -34,20 +34,15 @@ public class MouseMove : MonoBehaviour {
             Debug.Log("on ground");
         }   
 
-        if (col.gameObject.tag == ("Ladder")){
-            onLadder = true;
-            Debug.Log("on ladder");
-        }
-
-        if(col.gameObject.tag == "YarnBall"){ //replace with invisible object
-            ScoreScript.scoreValue += 100;
-            Debug.Log("score: " + ScoreScript.scoreValue);
-        }
-
         if (col.gameObject.tag == "YarnBall"){
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
             decreaseLives();
-            Debug.Log("Lives = " + lives);
+        }
+
+        if (col.gameObject.tag == "GirlMouse"){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+            ScoreScript.scoreValue += 100;
+            resetLives();
         }
 
       
@@ -55,38 +50,47 @@ public class MouseMove : MonoBehaviour {
     void OnCollisionExit2D(Collision2D col){
         if (col.gameObject.tag == ("Ground")){
           isGrounded = false;
-          Debug.Log("off ground");
-        }
-
-        if (col.gameObject.tag == ("Ladder")){
-          onLadder = false;
-          Debug.Log("off ladder");
+          Debug.Log("on ground");
         }
 
     }
 
+    void OnTriggerEnter2D(Collider2D col){
+        if (col.gameObject.tag == ("Ladder")){
+            onLadder = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col){
+        if (col.gameObject.tag == ("Ladder")){
+            onLadder = false;
+        }
+
+    }
+
+    public static void resetLives() {
+        thirdWasDestroyed = false;
+        secondWasDestroyed = false;
+        firstWasDestroyed = false;
+
+    }
     public static void decreaseLives() {
       lives--;
 
       if (lives == 2) {
-          //Destroy(heart3);
           thirdWasDestroyed = true;
       }
 
       if (lives == 1) {
-          // Destroy(heart3);
-          // Destroy(heart2);
           thirdWasDestroyed = true;
           secondWasDestroyed = true;
       }
 
       if (lives == 0){
-          // Destroy(heart3);
-          // Destroy(heart2);
-          // Destroy(heart1);
           thirdWasDestroyed = true;
           secondWasDestroyed = true;
           firstWasDestroyed = true;
+          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
       }
     }
 
@@ -117,22 +121,34 @@ public class MouseMove : MonoBehaviour {
         facingRight = new Vector2(transform.localScale.x, transform.localScale.y);
 
         Scene currentScene = SceneManager.GetActiveScene(); //active scene
+
     }
 
     // Update is called once per frame
     void Update()
     {
+      if (player.transform.position.y <= -370){
+          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
+      }
       Vector3 position = transform.position;
 
-      if (Input.GetKey(KeyCode.RightArrow)){
-        isFacingRight = true;
-        isFacingLeft = false;
-        rb.AddForce(-transform.right * (-moveForce), ForceMode2D.Impulse); 
+       if (Input.GetKey(KeyCode.RightArrow)){
+           isFacingRight = true;
+           isFacingLeft = false;
+       }
+       else if (Input.GetKey(KeyCode.LeftArrow)) {
+           isFacingRight = false;
+           isFacingLeft = true;
+       }
+
+      horizontal = Input.GetAxis("Horizontal");
+
+      if (Mathf.Abs(horizontal) > 0f){
+        rb.velocity = new Vector2(horizontal * moveForce * 5f, rb.velocity.y);
       }
-      else if (Input.GetKey(KeyCode.LeftArrow)) {
-        isFacingRight = false;
-        isFacingLeft = true;
-        rb.AddForce(transform.right * (-moveForce), ForceMode2D.Impulse); 
+      else if (Mathf.Abs(horizontal) < 0f){
+        rb.velocity = new Vector2(horizontal * moveForce * 5f, rb.velocity.y);
+        transform.localScale = facingLeft;
       }
 
       if (isFacingLeft){
@@ -143,16 +159,16 @@ public class MouseMove : MonoBehaviour {
         transform.localScale = facingRight;
       }
 
-      if (isGrounded == true && Input.GetKeyDown(KeyCode.Space)){
+      if (isGrounded == true && Input.GetKey(KeyCode.Space)){
           isJumping = true;
           jumpTimeCounter = jumpTime;
-          rb.velocity = Vector2.up * 100;
+          rb.velocity = Vector2.up * 150f;
       }
 
       if (Input.GetKey(KeyCode.Space) && isJumping == true) {
           if (jumpTimeCounter > 0){
-          rb.velocity = Vector2.up * 100;
-          jumpTimeCounter -= Time.deltaTime;
+            rb.velocity = Vector2.up * 150f;
+            jumpTimeCounter -= Time.deltaTime;
           }
           else {
             isJumping = false;
@@ -160,38 +176,27 @@ public class MouseMove : MonoBehaviour {
       }
       
       if (Input.GetKeyUp(KeyCode.Space)){
-        isJumping = false;
+          isJumping = false;
       }
       
+      vertical = Input.GetAxis("Vertical");
 
-      if (onLadder && Input.GetKey(KeyCode.UpArrow)){
+      if (onLadder && Mathf.Abs(vertical) >= 0f){
         isClimbing = true;
       }
       else if (!onLadder){
         isClimbing = false;
       }
+    }
 
+    private void FixedUpdate(){
       if (isClimbing){
-        rb.AddForce(transform.up * (moveForce), ForceMode2D.Force);
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(rb.velocity.x, vertical * moveForce * 5f);
       }
-
-      if (lives == 0){
-            Debug.Log("Game over");
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 0);
-            Application.Quit();
-       }
-      
-    //   if (position.x >= 242){
-    //       Debug.Log("out of bounds");
-    //       position.x = 242;
-    //       transform.position = position;
-    //   }
-
-    //   if (position.x <= -242){
-    //       Debug.Log("out of bounds");
-    //       position.x = -242;
-    //       transform.position = position;
-    //   }
+      else {
+        rb.gravityScale = 50f; 
+      }
     }
 }
 

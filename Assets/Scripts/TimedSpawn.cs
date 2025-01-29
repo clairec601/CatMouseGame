@@ -8,11 +8,11 @@ public class TimedSpawn : MonoBehaviour
     public GameObject SpawnObject;
     void Start()
     {
-        InvokeRepeating("spawnYarnBall", 5.0f, 5.0f); //calls method 
+        InvokeRepeating("spawnYarnBall", 5.0f, 10.0f); //calls method 
     }
 
     public void spawnYarnBall(){
-        Vector3 spawnPosition = new Vector3(2, 129, -5); 
+        Vector3 spawnPosition = new Vector3(-414, 126, -5); 
         if (SpawnObject.name == "Yarn"){
             GameObject cloneYarnBall = Instantiate(SpawnObject, spawnPosition, transform.rotation);
             cloneYarnBall.name = "cloneYarnBall";

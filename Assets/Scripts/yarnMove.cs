@@ -17,28 +17,7 @@ public class yarnMove : MonoBehaviour
     void Update()
     {
         Vector3 position = transform.position;
-        // stopSpawning = false;
-        // randomTimer -= Time.deltaTime;
-        // if (randomTimer <= 0 && !stopSpawning){
-        //     Instantiate(YarnBall, transform.position, transform.rotation);
-        //     stopSpawning = true;
-        //     randomTimer += setTime;
-        // 
-        rb.AddForce(transform.right * 1.2f, ForceMode2D.Impulse);
-
-        if (position.x >= 405){
-          //Debug.Log("out of bounds");
-          // position.x = 440;
-          // transform.position = position;
-        rb.velocity = Vector3.zero;
-        rb.AddForce(-transform.right * 1.2f, ForceMode2D.Impulse);
-        }
-
-        if (position.x <= -405){
-        rb.velocity = Vector3.zero;
-        rb.AddForce(transform.right * 1.2f, ForceMode2D.Impulse);
-        }
-
+        rb.AddForce(transform.right * 20f, ForceMode2D.Impulse);
         
     }
 
