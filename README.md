@@ -17,12 +17,11 @@ Link to built version: https://drive.google.com/file/d/1HOx-zNn0Ryaxe3KtBiyTO57b
 Made with Unity Editor Version 2022.3.16f1
 
 ## Learning Journey
-* This game requires a bit of patience and clever maneuvering. Enhances your concentration and focus!
+* This game was inspired by the concept of Tom and Jerry, as well as the gameplay of Donkey Kong, where your goal is to reach the top, while avoiding spawning obstacles. It requires a bit of patience, timing, and clever maneuvering, so it also enhances your concentration and focus!
 * New Technologies:
-    * Unity: This code sample is from my days in AP CS A, submitted as a final group project, and was my second project working in Unity. I handled the coding aspect of this project, and learned more about GameObject movement, preserving data with static variables, how to spawn objects, and managing scene changes. It was particularly difficult, especially because we weren't explicitly taught how to use Unity, and learned mostly through online tutorials and research.
+    * Unity: This code sample is from my days in AP CS A, submitted as a final group project, and was my second project working in Unity. I handled the coding aspect of this project, and learned more about GameObject movement, preserving data with static variables, how to spawn objects, and managing scene changes. It was particularly difficult, especially because we were never explicitly taught how to use Unity or code in C#, and learned mostly through online tutorials and research.
 * Challenges:
-    * Most of the challenge in this game lied in getting used to C# and Unity in general. Sometimes, jumping with the space bar and ground colliders can be a bit finicky, and, even despite researching a bunch, I couldn't find a way to make it more reliable. Fortunately, this issue doesn't seem to arise in my main submission.
-   
+    * Most of the challenge in this game lied in getting used to C# and Unity in general. Sometimes, jumping with the space bar and ground colliders can be a bit finicky, and, even despite researching a bunch, I couldn't find a way to make it more reliable :( Fortunately, this issue doesn't seem to arise in my main submission.
 
 ## Authors
 Claire Chang, Abigail Kumar, Khashiya Ranginwala
