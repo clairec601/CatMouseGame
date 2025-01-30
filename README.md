@@ -19,7 +19,10 @@ Made with Unity Editor Version 2022.3.16f1
 ## Learning Journey
 * This game requires a bit of patience and clever maneuvering. Enhances your concentration and focus!
 * New Technologies:
-    * Unity: This code sample is from my days in AP CS A, submitted as a final group project, and was my second project working in Unity. I handled the coding aspect of this project, and learned more about GameObject movement, preserving data with static variables, how to spawn objects, and managing scene changes. It was particularly difficult, especially because we weren't explicitly taught how to use Unity, and learned mostly through online tutorials and research. 
+    * Unity: This code sample is from my days in AP CS A, submitted as a final group project, and was my second project working in Unity. I handled the coding aspect of this project, and learned more about GameObject movement, preserving data with static variables, how to spawn objects, and managing scene changes. It was particularly difficult, especially because we weren't explicitly taught how to use Unity, and learned mostly through online tutorials and research.
+* Challenges:
+    * Most of the challenge in this game lied in getting used to C# and Unity in general. Sometimes, jumping with the space bar and ground colliders can be a bit finicky, and, even despite researching a bunch, I couldn't find a way to make it more reliable. Fortunately, this issue doesn't seem to arise in my main submission.
+   
 
 ## Authors
 Claire Chang, Abigail Kumar, Khashiya Ranginwala
